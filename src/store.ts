@@ -4,7 +4,7 @@ export const store = reactive({
   chat: {
     messages: <any>[]
   },
-  ai: {
+  ask: {
     messages: <any>[]
   }
 })

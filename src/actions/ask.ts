@@ -1,25 +1,26 @@
 import { store } from '@/store'
+import config from '@/config'
 
-const getParams = () => new URL(window.location.href).searchParams
+const getPathname = () => new URL(window.location.href).pathname
+const { peopleAllowedToAsk } = config
 
 export default async function (options:any) {
-  const params = getParams()
+  const pathname = getPathname()
 
-  if(!params.get('ask'))
+  if(pathname != '/ask')
     return
 
-  const user = options.tags.username
-  if(user != 'maykbrito')
+  if(!peopleAllowedToAsk.includes(options.tags.username))
     return
 
   const { message } = options
 
-  store.ai.messages.push({
-    user: 'n00b',
+  store.ask.messages.push({
+    user: 'k1d',
     message
   })
 
-  console.log('n00b: ' + message)
+  console.log('k1d: ' + message)
   await new Promise(res => setTimeout(() => 
   res(''), 6000))
 
@@ -29,7 +30,7 @@ export default async function (options:any) {
 
     console.log('bot: ' + response.content)
 
-    store.ai.messages.push({
+    store.ask.messages.push({
       user: 'therealdevthales',
       message: response.content
     })

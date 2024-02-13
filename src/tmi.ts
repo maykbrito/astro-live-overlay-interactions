@@ -29,7 +29,7 @@ const handleAction = (message: string, tags:any, channel: string) => {
   if(message.startsWith('!')) {
     const action = message.split(' ')[0].replace('!', '') as ActionKey
 
-    const removeAction = message.replace('!' + action, '')
-    actions[action] && actions[action]({message: removeAction, tags, client, channel})
+    const messageWithoutAction = message.replace('!' + action, '')
+    actions[action] && actions[action]({message: messageWithoutAction, tags, client, channel})
   }
 }

@@ -2,7 +2,7 @@
   <div class="chat-wrapper w-screen h-screen">
     <div id="chat" ref="messagesWrapper" 
       class="grid bottom-1 absolute">
-      <StreamAiChat 
+      <StreamAskChat 
       v-for="({message, user}, index) in messages"
       :key="index"
       :user="user"
@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import StreamAiChat from "@/components/StreamAiChat.vue";
+import StreamAskChat from "@/components/StreamAskChat.vue";
 import { store } from "@/store"
 
 export default {
   components: {
-    StreamAiChat,
+    StreamAskChat,
   },
 
   mounted() {
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     messages() {
-      return store.ai.messages
+      return store.ask.messages
     }
   },
 };
