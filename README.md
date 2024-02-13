@@ -15,15 +15,17 @@ Another set of overlays for liveshows.
 The sarcastic bot running when you type `!ask` followed by your honest question.
 You can access it at `/ask`
 
-__need to `OPENAI_KEY` in .env file__
+_need to `OPENAI_KEY` in .env file_
 
 
 ## Confetti
 
 Jump confetti in the scene! **Sounds included**.
+
 Access it at `/?confetti=true`
 
 ## SSR
 
 `pnpm run build`
+
 `pnpm run serve`
