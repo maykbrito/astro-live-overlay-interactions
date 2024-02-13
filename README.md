@@ -15,6 +15,8 @@ Another set of overlays for liveshows.
 The sarcastic bot running when you type `!ask` followed by your honest question.
 You can access it at `/ask`
 
+__need to `OPENAI_KEY` in .env file__
+
 
 ## Confetti
 
