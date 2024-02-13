@@ -1,5 +1,6 @@
 <template>
   <audio
+    :data-id="effect.id"
     v-if="effect.src"
     ref="audioFile"
     :src="`/sounds/${effect.src}`"
@@ -21,7 +22,10 @@
         sound.addEventListener("ended", () => {
           sound.src = "";
           this.$emit("ended");
-          this.removeSelf()
+          const remover = setTimeout(() => {
+            this.removeSelf()
+            clearInterval(remover)
+          }, 1000)
         });
 
         sound.play().catch(error => {
@@ -33,7 +37,7 @@
 
     methods: {
       removeSelf() {
-        this.$el.parentNode.removeChild(this.$el);
+        this.$el?.parentNode?.removeChild(this.$el);
       }
     }
   };
