@@ -10,10 +10,17 @@ Another set of overlays for liveshows.
 - OpenAI
 - confetti.js
 
+## Chat
+
+Twitch chat overlay. 
+Use `src/config.ts` and give your twitch.tv username. 
+
 ## TheRealDevThales
 
 The sarcastic bot running when you type `!ask` followed by your honest question.
 You can access it at `/ask`
+
+You can allow people to ask by given user names in the `src/config.ts`
 
 _need to `OPENAI_KEY` in .env file_
 
