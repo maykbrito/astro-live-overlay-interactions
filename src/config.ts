@@ -1,3 +1,3 @@
 export default {
-  channels: ["maykbrito"]
+  channels: ["maykbrito"],
 }
