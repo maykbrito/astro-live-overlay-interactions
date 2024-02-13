@@ -1,5 +1,5 @@
 {
-  "name": "regular-radiation",
+  "name": "astro-live-overlays",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,10 +7,12 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "serve": "HOST=0.0.0.0 PORT=8485 node ./dist/server/entry.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
+    "@astrojs/node": "^8.2.0",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vue": "^4.0.8",
     "@nanostores/vue": "^0.10.0",

@@ -1,6 +1,6 @@
-# Astro Chat Overlay
+# Astro Live Overlays
 
-Another chat overlay for live.
+Another set of overlays for liveshows.
 
 ## Techs
 
@@ -14,3 +14,14 @@ Another chat overlay for live.
 
 The sarcastic bot running when you type `!ask` followed by your honest question.
 You can access it at `/ask`
+
+
+## Confetti
+
+Jump confetti in the scene! **Sounds included**.
+Access it at `/?confetti=true`
+
+## SSR
+
+`pnpm run build`
+`pnpm run serve`
