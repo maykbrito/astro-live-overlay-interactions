@@ -1,25 +1,17 @@
 <template>
-  <SoundEffects
-    v-for="(sfx, index) in effects"
-    :key="index"
-    :effect="sfx"
-    v-on:ended="sfxEnded"
-  />
+	<SoundEffect
+		v-for="(sfx, index) in effects"
+		:key="index"
+		:effect="sfx"
+		@ended="removeSfx"
+	/>
 </template>
 
-<script>
- import SoundEffects from '@/components/SoundEffects.vue';
- import { store } from "@/store"
+<script setup lang="ts">
+import { computed } from 'vue'
 
- export default {
-  components: {
-    SoundEffects,
-  },
+import SoundEffect from '@/components/SoundEffect.vue'
+import { store, removeSfx } from '@/store'
 
-  computed: {
-    effects() {
-      return store.sfx
-    }
-  },
- }
+const effects = computed(() => store.sfx)
 </script>

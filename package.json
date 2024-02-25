@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "serve": "HOST=0.0.0.0 PORT=8485 node ./dist/server/entry.mjs",
-    "ws": "node src/ws.js"
+    "ws": "node src/ws.js",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
@@ -22,8 +24,6 @@
     "js-confetti": "^0.12.0",
     "nanostores": "^0.9.5",
     "openai": "^4.25.0",
-    "socket.io": "^4.7.4",
-    "socket.io-client": "^4.7.4",
     "tailwindcss": "^3.4.1",
     "tmi.js": "^1.8.5",
     "tubechat": "^1.0.3",
@@ -31,6 +31,12 @@
     "vue": "^3.4.15"
   },
   "devDependencies": {
-    "@types/tmi.js": "^1.8.6"
+    "@rushstack/eslint-patch": "^1.7.2",
+    "@types/tmi.js": "^1.8.6",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "prettier": "3.2.5"
   }
 }

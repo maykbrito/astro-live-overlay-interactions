@@ -1,7 +1,8 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import GlobalSfx from "@/views/GlobalSfx.vue"
+import Layout from '@/layouts/Layout.astro'
+import GlobalSfx from '@/views/GlobalSfx.vue'
 ---
+
 <Layout>
-  <GlobalSfx client:load />
+	<GlobalSfx client:only="vue" />
 </Layout>

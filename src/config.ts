@@ -1,4 +1,4 @@
 export default {
-  channels: ["maykbrito"],
-  peopleAllowedToAsk: ["maykbrito"],
+	channels: ['maykbrito'],
+	peopleAllowedToAsk: ['maykbrito']
 }

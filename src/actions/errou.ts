@@ -1,21 +1,17 @@
+import type { Sfx } from '@/store'
 import { store } from '@/store'
 
 const getParams = () => new URL(window.location.href).searchParams
 
-export default function (options:any) {
-  const params = getParams()
+export default function () {
+	const params = getParams()
 
-  if(!params.get('errou'))
-    return
+	if (!params.get('errou')) return
 
-  const theSound = { 
-    id: String(Date.now()),
-    src: 'erroou.mp3' 
-  }
-  
-  store.sfx.push(theSound)
+	const theSound: Sfx = {
+		id: crypto.randomUUID(),
+		src: 'erroou.mp3'
+	}
 
-  setTimeout(() => {
-    store.sfx.splice(store.sfx.indexOf(theSound), 1)
-  }, 2000)
+	store.sfx.push(theSound)
 }

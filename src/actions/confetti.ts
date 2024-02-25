@@ -1,3 +1,4 @@
+import type { Sfx } from '@/store'
 import { store } from '@/store'
 import JSConfetti from 'js-confetti'
 
@@ -5,22 +6,17 @@ const jsConfetti = new JSConfetti()
 
 const getParams = () => new URL(window.location.href).searchParams
 
-export default function (options:any) {
-  const params = getParams()
+export default function () {
+	const params = getParams()
 
-  if(!params.get('confetti'))
-    return
+	if (!params.get('confetti')) return
 
-  const theSound = { 
-    id: String(Date.now()),
-    src: 'cheering.mp3' 
-  }
-  
-  store.sfx.push(theSound)
+	const theSound: Sfx = {
+		id: crypto.randomUUID(),
+		src: 'cheering.mp3'
+	}
 
-  jsConfetti.addConfetti()
+	store.sfx.push(theSound)
 
-  setTimeout(() => {
-    store.sfx.splice(store.sfx.indexOf(theSound), 1)
-  }, 6000)
+	jsConfetti.addConfetti()
 }
