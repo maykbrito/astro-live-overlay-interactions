@@ -34,9 +34,20 @@ export default {
       setTimeout(() => this.$refs.messageWrapper?.classList.add('visible'), 100)
     });
   },
+  methods: {
+		/**
+		 * @description This function replaces all < and > with safe HTML characters to prevent XSS attacks
+		 * @param {string} message
+		 * @returns {string}
+		 * */
+		sanitizeMessage(message) {
+			return message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		}
+	},
   computed: {
     messageWithEmotes() {
-      let message = this.message
+      let message = this.sanitizeMessage(this.message)
+
       const messageEmotes = this.extra.emotes
       const replaceBetween = ({start, end, img, message}) => message.substring(0, start) + img + message.substring(end);
       const imgEmote = (src) => `<img class="inline-block w-8" src="${src}"/>`
