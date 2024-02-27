@@ -24,7 +24,7 @@ function handleAudioEnd() {
 watch(audioElement, sound => {
 	if (!sound || !props.effect.src) return
 
-	sound.addEventListener('ended', handleAudioEnd, { once: true })
+	sound.addEventListener('ended', handleAudioEnd)
 
 	sound.play().catch(error => {
 		console.log('failed to play sound:', error)
