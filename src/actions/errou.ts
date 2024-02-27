@@ -7,14 +7,8 @@ export default function () {
 
 	if (!params.get('errou')) return
 
-	const theSound = {
-		id: String(Date.now()),
+	store.sfx.push({
+		id: crypto.randomUUID(),
 		src: 'erroou.mp3'
-	}
-
-	store.sfx.push(theSound)
-
-	setTimeout(() => {
-		store.sfx.splice(store.sfx.indexOf(theSound), 1)
-	}, 2000)
+	})
 }

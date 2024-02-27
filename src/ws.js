@@ -9,13 +9,21 @@ const server = httpServer.createServer()
 
 const io = new Server(server, {
 	cors: {
-		origin: 'http://localhost:8485'
+		origin: '*'
 	}
 })
 
 const onConnection = socket => {
 	tubeChat.on('message', ({ message, name }) => {
-		socket.emit('chat', { name, message })
+		const messageText = message[0]?.text || ''
+
+		/** @type {import('./actions').MessageEventData} */
+		const messageEventData = {
+			message: messageText,
+			username: name
+		}
+
+		socket.emit('chat', messageEventData)
 	})
 }
 
