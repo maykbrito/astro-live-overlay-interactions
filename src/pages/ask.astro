@@ -3,5 +3,5 @@ import Layout from "@/layouts/Layout.astro"
 import AskView from "@/views/AskView.vue"
 ---
 <Layout>
-  <AskView client:load />
+  <AskView client:only="vue" />
 </Layout>

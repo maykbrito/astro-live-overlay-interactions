@@ -27,9 +27,9 @@ export default async function ({
 	await new Promise(res => setTimeout(() => res(''), 6000))
 
 	try {
-		const response = (await fetch(
-			'http://localhost:4321/api/bot/?q=' + message
-		).then(res => res.json())) as { content: string }
+		const response = (await fetch(`/api/bot/?q=${message}`).then(res =>
+			res.json()
+		)) as { content: string }
 
 		console.log('bot: ' + response.content)
 

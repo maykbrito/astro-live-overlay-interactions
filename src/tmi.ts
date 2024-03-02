@@ -2,7 +2,6 @@ import tmi from 'tmi.js'
 import type { MessageEventData } from '@/actions'
 import { handleMessageEvent } from '@/actions'
 import config from '@/config'
-import { store } from '@/store'
 
 const client = new tmi.Client({
 	channels: config.channels
@@ -18,6 +17,4 @@ client.on('message', (_channel, extra, message) => {
 	}
 
 	handleMessageEvent(messageEventData)
-
-	store.chat.messages.push(messageEventData)
 })

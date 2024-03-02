@@ -3,6 +3,7 @@ import type { ChatUserstate } from 'tmi.js'
 import confetti from '@/actions/confetti'
 import errou from '@/actions/errou'
 import ask from '@/actions/ask'
+import { store } from '@/store'
 
 const actions = {
 	errou,
@@ -24,6 +25,8 @@ function isValidAction(command: string): command is Action {
 }
 
 export function handleMessageEvent(data: MessageEventData) {
+	store.chat.messages.push(data)
+
 	const { message, username } = data
 
 	if (!message.startsWith('!')) return
@@ -35,11 +38,6 @@ export function handleMessageEvent(data: MessageEventData) {
 	const messageWithoutAction = message.replace('!' + action, '')
 
 	const callAction = actions[action]
-
-	if (!callAction) {
-		console.log(`[ERRO] Ação desconhecida: !${action}`)
-		return
-	}
 
 	callAction({ message: messageWithoutAction, username })
 }

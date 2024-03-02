@@ -1,5 +1,5 @@
 <template>
-	<div ref="messageWrapper" class="message-wrapper p-1 w-screen">
+	<div class="message-wrapper p-1 w-screen" :class="{ visible: isVisible }">
 		<div class="inner p-4 text-gray-400 relative bg-gray-900 text-lg">
 			<div class="text-gray-100 mb-2 text-xs uppercase">
 				{{ user }}
@@ -9,71 +9,77 @@
 	</div>
 </template>
 
-<script>
-export default {
-	props: {
-		message: {
-			type: String,
-			required: true
-		},
-		user: {
-			type: String,
-			required: true
-		},
-		extra: {
-			type: Object,
-			required: false
-		}
-	},
-	mounted() {
-		this.$nextTick(() => {
-			setTimeout(() => this.$refs.messageWrapper?.classList.add('visible'), 100)
-		})
-	},
-	methods: {
-		/**
-		 * @description This function replaces all < and > with safe HTML characters to prevent XSS attacks
-		 * @param {string} message
-		 * @returns {string}
-		 * */
-		sanitizeMessage(message) {
-			return message.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-		}
-	},
-	computed: {
-		messageWithEmotes() {
-			let message = this.sanitizeMessage(this.message)
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
 
-			const messageEmotes = this.extra?.emotes
+import type { ChatUserstate } from 'tmi.js'
+import { sanitizeMessage } from '@/utils'
 
-			if (!messageEmotes) return message
+type StreamChatProps = {
+	message: string
+	user: string
+	extra?: ChatUserstate | null
+}
 
-			const replaceBetween = ({ start, end, img, message }) =>
-				message.substring(0, start) + img + message.substring(end)
-			const imgEmote = src => `<img class="inline-block w-8" src="${src}"/>`
-			const emoteURL = emoteId =>
-				`https://static-cdn.jtvnw.net/emoticons/v1/${emoteId}/3.0`
+const props = withDefaults(defineProps<StreamChatProps>(), {
+	extra: null
+})
 
-			if (messageEmotes) {
-				const emotes = Object.keys(messageEmotes)
-				for (let emote of emotes) {
-					let reversedMessageEmotes = messageEmotes[emote].toReversed()
-					for (let i = 0; i < reversedMessageEmotes.length; i++) {
-						let img = imgEmote(emoteURL(emote))
-						let [start, end] = reversedMessageEmotes[i].split('-')
-						message = replaceBetween({
-							start,
-							end: Number(end) + 1,
-							img,
-							message
-						})
-					}
-				}
-			}
-			return message
+const isVisible = ref(false)
+
+onMounted(() => setTimeout(() => (isVisible.value = true), 100))
+
+type ReplaceBetweenParams = {
+	start: number
+	end: number
+	img: string
+	message: string
+}
+
+function replaceBetween({
+	start,
+	end,
+	img,
+	message
+}: ReplaceBetweenParams): string {
+	return message.substring(0, start) + img + message.substring(end)
+}
+
+function imgEmote(src: string) {
+	return `<img class="inline-block w-8" src="${src}"/>`
+}
+
+function emoteURL(emoteId: string) {
+	return `https://static-cdn.jtvnw.net/emoticons/v1/${emoteId}/3.0`
+}
+
+const messageWithEmotes = computed(() => {
+	let message = sanitizeMessage(props.message)
+
+	const messageEmotes = props.extra?.emotes
+
+	if (!messageEmotes) return message
+
+	const emotes = Object.keys(messageEmotes)
+
+	for (let emote of emotes) {
+		let reversedMessageEmotes = messageEmotes[emote].toReversed()
+
+		for (let i = 0; i < reversedMessageEmotes.length; i++) {
+			let img = imgEmote(emoteURL(emote))
+			let [start, end] = reversedMessageEmotes[i].split('-')
+
+			message = replaceBetween({
+				start: Number(start),
+				end: Number(end) + 1,
+				img,
+				message
+			})
 		}
 	}
-}
+
+	return message
+})
 </script>
 
 <style scoped>
