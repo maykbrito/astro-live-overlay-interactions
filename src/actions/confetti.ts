@@ -6,20 +6,20 @@ const jsConfetti = new JSConfetti()
 const getParams = () => new URL(window.location.href).searchParams
 
 export default function () {
-	const params = getParams()
+  const params = getParams()
 
-	if (!params.get('confetti')) return
+  if (!params.get('confetti')) return
 
-	const theSound = {
-		id: String(Date.now()),
-		src: 'cheering.mp3'
-	}
+  const theSound = {
+    id: String(Date.now()),
+    src: 'cheering.mp3'
+  }
 
-	store.sfx.push(theSound)
+  store.sfx.push(theSound)
 
-	jsConfetti.addConfetti()
+  jsConfetti.addConfetti()
 
-	setTimeout(() => {
-		store.sfx.splice(store.sfx.indexOf(theSound), 1)
-	}, 6000)
+  setTimeout(() => {
+    store.sfx.splice(store.sfx.indexOf(theSound), 1)
+  }, 6000)
 }

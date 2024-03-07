@@ -3,7 +3,7 @@ import errou from './errou'
 import ask from './ask'
 
 export default {
-	errou,
-	confetti,
-	ask
+  errou,
+  confetti,
+  ask
 }

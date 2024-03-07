@@ -8,15 +8,15 @@ tubeChat.connect('maykbrito')
 const server = httpServer.createServer()
 
 const io = new Server(server, {
-	cors: {
-		origin: 'http://localhost:8485'
-	}
+  cors: {
+    origin: 'http://localhost:8485'
+  }
 })
 
 const onConnection = socket => {
-	tubeChat.on('message', ({ message, name }) => {
-		socket.emit('chat', { name, message })
-	})
+  tubeChat.on('message', ({ message, name }) => {
+    socket.emit('chat', { name, message })
+  })
 }
 
 io.on('connection', onConnection)
