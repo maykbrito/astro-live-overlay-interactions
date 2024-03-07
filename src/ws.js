@@ -8,23 +8,23 @@ tubeChat.connect('maykbrito')
 const server = httpServer.createServer()
 
 const io = new Server(server, {
-	cors: {
-		origin: '*'
-	}
+  cors: {
+    origin: '*'
+  }
 })
 
 const onConnection = socket => {
-	tubeChat.on('message', ({ message, name }) => {
-		const messageText = message[0]?.text || ''
+  tubeChat.on('message', ({ message, name }) => {
+    const messageText = message[0]?.text || ''
 
-		/** @type {import('./actions').MessageEventData} */
-		const messageEventData = {
-			message: messageText,
-			username: name
-		}
+    /** @type {import('./actions').MessageEventData} */
+    const messageEventData = {
+      message: messageText,
+      username: name
+    }
 
-		socket.emit('chat', messageEventData)
-	})
+    socket.emit('chat', messageEventData)
+  })
 }
 
 io.on('connection', onConnection)
