@@ -8,18 +8,17 @@
 </template>
 
 <script>
- import SoundEffects from '@/components/SoundEffects.vue';
- import { store } from "@/store"
+import SoundEffects from '@/components/SoundEffects.vue'
+import { store } from '@/store'
 
- export default {
+export default {
   components: {
-    SoundEffects,
+    SoundEffects
   },
-
   computed: {
     effects() {
       return store.sfx
     }
-  },
- }
+  }
+}
 </script>

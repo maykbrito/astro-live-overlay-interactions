@@ -2,17 +2,16 @@ import { store } from '@/store'
 
 const getParams = () => new URL(window.location.href).searchParams
 
-export default function (options:any) {
+export default function () {
   const params = getParams()
 
-  if(!params.get('errou'))
-    return
+  if (!params.get('errou')) return
 
-  const theSound = { 
+  const theSound = {
     id: String(Date.now()),
-    src: 'erroou.mp3' 
+    src: 'erroou.mp3'
   }
-  
+
   store.sfx.push(theSound)
 
   setTimeout(() => {

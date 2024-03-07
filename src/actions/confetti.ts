@@ -5,17 +5,16 @@ const jsConfetti = new JSConfetti()
 
 const getParams = () => new URL(window.location.href).searchParams
 
-export default function (options:any) {
+export default function () {
   const params = getParams()
 
-  if(!params.get('confetti'))
-    return
+  if (!params.get('confetti')) return
 
-  const theSound = { 
+  const theSound = {
     id: String(Date.now()),
-    src: 'cheering.mp3' 
+    src: 'cheering.mp3'
   }
-  
+
   store.sfx.push(theSound)
 
   jsConfetti.addConfetti()

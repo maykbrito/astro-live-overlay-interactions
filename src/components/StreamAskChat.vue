@@ -1,11 +1,7 @@
-
 <template>
-  <div 
-    ref="messageWrapper" 
-    class="message-wrapper p-1 w-screen">
+  <div ref="messageWrapper" class="message-wrapper p-1 w-screen">
     <div class="inner p-4 text-gray-400 relative bg-gray-900 text-lg">
-      <div 
-      class="text-gray-100 mb-2 text-xs uppercase">
+      <div class="text-gray-100 mb-2 text-xs uppercase">
         {{ user }}
       </div>
       <p>{{ message }}</p>
@@ -32,20 +28,20 @@ export default {
   mounted() {
     this.$nextTick(() => {
       setTimeout(() => this.$refs.messageWrapper?.classList.add('visible'), 100)
-    });
+    })
 
     const removeTimer = setTimeout(() => {
-      this.removeSelf();
-      clearTimeout(removeTimer);
-    }, 21000);
+      this.removeSelf()
+      clearTimeout(removeTimer)
+    }, 21000)
   },
 
   methods: {
     removeSelf() {
-      this.$el.parentNode.removeChild(this.$el);
+      this.$el.parentNode.removeChild(this.$el)
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -53,8 +49,10 @@ export default {
   --outline-width: 4px;
   /* overflow: hidden; */
   opacity: 0;
-  transition: opacity 300ms, margin-top 300ms;
-  font-family: "Press Start 2P", sans-serif;
+  transition:
+    opacity 300ms,
+    margin-top 300ms;
+  font-family: 'Press Start 2P', sans-serif;
 }
 
 .inner:after,
@@ -89,5 +87,4 @@ export default {
 .inner {
   overflow-wrap: break-word;
 }
-
 </style>

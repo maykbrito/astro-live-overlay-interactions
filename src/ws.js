@@ -9,17 +9,16 @@ const server = httpServer.createServer()
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:8485"
+    origin: 'http://localhost:8485'
   }
 })
 
-const onConnection = (socket) => {
-  tubeChat.on('message', ({ badges, channel, channelId, color, id, isMembership, isModerator, isNewMember, isOwner, isVerified, message, name, thumbnail, timestamp }) => {
-    socket.emit('chat', {name, message})
+const onConnection = socket => {
+  tubeChat.on('message', ({ message, name }) => {
+    socket.emit('chat', { name, message })
   })
 }
 
-io.on("connection", onConnection)
+io.on('connection', onConnection)
 
 server.listen(3333)
-

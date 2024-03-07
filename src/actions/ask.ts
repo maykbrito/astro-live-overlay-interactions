@@ -4,14 +4,12 @@ import config from '@/config'
 const getPathname = () => new URL(window.location.href).pathname
 const { peopleAllowedToAsk } = config
 
-export default async function (options:any) {
+export default async function (options: any) {
   const pathname = getPathname()
 
-  if(pathname != '/ask')
-    return
+  if (pathname != '/ask') return
 
-  if(!peopleAllowedToAsk.includes(options.tags.username))
-    return
+  if (!peopleAllowedToAsk.includes(options.tags.username)) return
 
   const { message } = options
 
@@ -21,12 +19,12 @@ export default async function (options:any) {
   })
 
   console.log('k1d: ' + message)
-  await new Promise(res => setTimeout(() => 
-  res(''), 6000))
+  await new Promise(res => setTimeout(() => res(''), 6000))
 
   try {
-    const response = await fetch('http://localhost:4321/api/bot/?q=' + message)
-    .then(res => res.json()) as { content: string}
+    const response = (await fetch(
+      'http://localhost:4321/api/bot/?q=' + message
+    ).then(res => res.json())) as { content: string }
 
     console.log('bot: ' + response.content)
 
@@ -35,6 +33,6 @@ export default async function (options:any) {
       message: response.content
     })
   } catch (error) {
-    console.error("Erro ao chamar a API da OpenAI:", error);
+    console.error('Erro ao chamar a API da OpenAI:', error)
   }
 }
