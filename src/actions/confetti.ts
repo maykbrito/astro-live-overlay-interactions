@@ -10,16 +10,10 @@ export default function () {
 
   if (!params.get('confetti')) return
 
-  const theSound = {
-    id: String(Date.now()),
+  store.sfx.push({
+    id: crypto.randomUUID(),
     src: 'cheering.mp3'
-  }
-
-  store.sfx.push(theSound)
+  })
 
   jsConfetti.addConfetti()
-
-  setTimeout(() => {
-    store.sfx.splice(store.sfx.indexOf(theSound), 1)
-  }, 6000)
 }

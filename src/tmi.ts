@@ -1,10 +1,7 @@
 import tmi from 'tmi.js'
-import config from './config'
-import actions from './actions/index'
-
-// https://bobbyhadz.com/blog/typescript-access-object-property-dynamically
-type ActionKey = keyof typeof actions
-
+import type { MessageEventData } from '@/actions'
+import { handleMessageEvent } from '@/actions'
+import config from '@/config'
 import { store } from '@/store'
 
 const client = new tmi.Client({
@@ -13,23 +10,14 @@ const client = new tmi.Client({
 
 client.connect()
 
-client.on('message', (channel: string, tags: any, message: string) => {
-  handleAction(message, tags, channel)
-
-  store.chat.messages.push({
-    channel,
-    user: tags.username,
+client.on('message', (_channel, extra, message) => {
+  const messageEventData: MessageEventData = {
     message,
-    extra: tags
-  })
-})
-
-const handleAction = (message: string, tags: any, channel: string) => {
-  if (message.startsWith('!')) {
-    const action = message.split(' ')[0].replace('!', '') as ActionKey
-
-    const messageWithoutAction = message.replace('!' + action, '')
-    actions[action] &&
-      actions[action]({ message: messageWithoutAction, tags, client, channel })
+    username: extra.username || 'Nome não informado',
+    extra
   }
-}
+
+  handleMessageEvent(messageEventData)
+
+  store.chat.messages.push(messageEventData)
+})

@@ -1,20 +1,25 @@
 import { store } from '@/store'
 import config from '@/config'
-
 const getPathname = () => new URL(window.location.href).pathname
 const { peopleAllowedToAsk } = config
 
-export default async function (options: any) {
+type AskHandlerParams = {
+  username: string
+  message: string
+}
+
+export default async function ({
+  message,
+  username
+}: AskHandlerParams): Promise<void> {
   const pathname = getPathname()
 
   if (pathname != '/ask') return
 
-  if (!peopleAllowedToAsk.includes(options.tags.username)) return
-
-  const { message } = options
+  if (!peopleAllowedToAsk.includes(username)) return
 
   store.ask.messages.push({
-    user: 'k1d',
+    username: 'k1d',
     message
   })
 
@@ -29,7 +34,7 @@ export default async function (options: any) {
     console.log('bot: ' + response.content)
 
     store.ask.messages.push({
-      user: 'therealdevthales',
+      username: 'therealdevthales',
       message: response.content
     })
   } catch (error) {

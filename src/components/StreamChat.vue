@@ -44,7 +44,10 @@ export default {
     messageWithEmotes() {
       let message = this.sanitizeMessage(this.message)
 
-      const messageEmotes = this.extra.emotes
+      const messageEmotes = this.extra?.emotes
+
+      if (!messageEmotes) return message
+
       const replaceBetween = ({ start, end, img, message }) =>
         message.substring(0, start) + img + message.substring(end)
       const imgEmote = src => `<img class="inline-block w-8" src="${src}"/>`
