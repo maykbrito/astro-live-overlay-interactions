@@ -1,10 +1,10 @@
 <template>
-	<SoundEffect
-		v-for="sfx in effects"
-		:key="sfx.id"
-		:effect="sfx"
-		@ended="removeSfx"
-	/>
+  <SoundEffect
+    v-for="sfx in effects"
+    :key="sfx.id"
+    :effect="sfx"
+    @ended="removeSfx"
+  />
 </template>
 
 <script setup lang="ts">

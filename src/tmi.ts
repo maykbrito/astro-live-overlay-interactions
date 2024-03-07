@@ -5,19 +5,19 @@ import config from '@/config'
 import { store } from '@/store'
 
 const client = new tmi.Client({
-	channels: config.channels
+  channels: config.channels
 })
 
 client.connect()
 
 client.on('message', (_channel, extra, message) => {
-	const messageEventData: MessageEventData = {
-		message,
-		username: extra.username || 'Nome não informado',
-		extra
-	}
+  const messageEventData: MessageEventData = {
+    message,
+    username: extra.username || 'Nome não informado',
+    extra
+  }
 
-	handleMessageEvent(messageEventData)
+  handleMessageEvent(messageEventData)
 
-	store.chat.messages.push(messageEventData)
+  store.chat.messages.push(messageEventData)
 })

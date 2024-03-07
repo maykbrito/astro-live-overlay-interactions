@@ -5,41 +5,41 @@ import errou from '@/actions/errou'
 import ask from '@/actions/ask'
 
 const actions = {
-	errou,
-	confetti,
-	ask
+  errou,
+  confetti,
+  ask
 } as const
 
 type ActionsRecord = typeof actions
 type Action = keyof ActionsRecord
 
 export type MessageEventData = {
-	message: string
-	username: string
-	extra?: ChatUserstate
+  message: string
+  username: string
+  extra?: ChatUserstate
 }
 
 function isValidAction(command: string): command is Action {
-	return command in actions
+  return command in actions
 }
 
 export function handleMessageEvent(data: MessageEventData) {
-	const { message, username } = data
+  const { message, username } = data
 
-	if (!message.startsWith('!')) return
+  if (!message.startsWith('!')) return
 
-	const action: Action | string = message.split(' ')[0].replace('!', '')
+  const action: Action | string = message.split(' ')[0].replace('!', '')
 
-	if (!isValidAction(action)) return
+  if (!isValidAction(action)) return
 
-	const messageWithoutAction = message.replace('!' + action, '')
+  const messageWithoutAction = message.replace('!' + action, '')
 
-	const callAction = actions[action]
+  const callAction = actions[action]
 
-	if (!callAction) {
-		console.log(`[ERRO] Ação desconhecida: !${action}`)
-		return
-	}
+  if (!callAction) {
+    console.log(`[ERRO] Ação desconhecida: !${action}`)
+    return
+  }
 
-	callAction({ message: messageWithoutAction, username })
+  callAction({ message: messageWithoutAction, username })
 }

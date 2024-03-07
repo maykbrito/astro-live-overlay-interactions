@@ -6,14 +6,14 @@ const jsConfetti = new JSConfetti()
 const getParams = () => new URL(window.location.href).searchParams
 
 export default function () {
-	const params = getParams()
+  const params = getParams()
 
-	if (!params.get('confetti')) return
+  if (!params.get('confetti')) return
 
-	store.sfx.push({
-		id: crypto.randomUUID(),
-		src: 'cheering.mp3'
-	})
+  store.sfx.push({
+    id: crypto.randomUUID(),
+    src: 'cheering.mp3'
+  })
 
-	jsConfetti.addConfetti()
+  jsConfetti.addConfetti()
 }

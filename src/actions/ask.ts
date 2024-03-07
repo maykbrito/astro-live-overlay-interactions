@@ -4,40 +4,40 @@ const getPathname = () => new URL(window.location.href).pathname
 const { peopleAllowedToAsk } = config
 
 type AskHandlerParams = {
-	username: string
-	message: string
+  username: string
+  message: string
 }
 
 export default async function ({
-	message,
-	username
+  message,
+  username
 }: AskHandlerParams): Promise<void> {
-	const pathname = getPathname()
+  const pathname = getPathname()
 
-	if (pathname != '/ask') return
+  if (pathname != '/ask') return
 
-	if (!peopleAllowedToAsk.includes(username)) return
+  if (!peopleAllowedToAsk.includes(username)) return
 
-	store.ask.messages.push({
-		username: 'k1d',
-		message
-	})
+  store.ask.messages.push({
+    username: 'k1d',
+    message
+  })
 
-	console.log('k1d: ' + message)
-	await new Promise(res => setTimeout(() => res(''), 6000))
+  console.log('k1d: ' + message)
+  await new Promise(res => setTimeout(() => res(''), 6000))
 
-	try {
-		const response = (await fetch(
-			'http://localhost:4321/api/bot/?q=' + message
-		).then(res => res.json())) as { content: string }
+  try {
+    const response = (await fetch(
+      'http://localhost:4321/api/bot/?q=' + message
+    ).then(res => res.json())) as { content: string }
 
-		console.log('bot: ' + response.content)
+    console.log('bot: ' + response.content)
 
-		store.ask.messages.push({
-			username: 'therealdevthales',
-			message: response.content
-		})
-	} catch (error) {
-		console.error('Erro ao chamar a API da OpenAI:', error)
-	}
+    store.ask.messages.push({
+      username: 'therealdevthales',
+      message: response.content
+    })
+  } catch (error) {
+    console.error('Erro ao chamar a API da OpenAI:', error)
+  }
 }
