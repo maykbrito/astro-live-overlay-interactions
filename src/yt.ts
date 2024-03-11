@@ -1,10 +1,9 @@
-import { io, Socket } from 'socket.io-client'
 import { handleMessageEvent } from '@/actions'
 
-let socket: Socket | null = null
+const eventSource = new EventSource('/api/youtube-chat')
 
-if (!socket) {
-  socket = io('http://localhost:3333')
+eventSource.addEventListener('chat', ({ data }) => {
+  const messageEventData = JSON.parse(data)
 
-  socket.on('chat', handleMessageEvent)
-}
+  handleMessageEvent(messageEventData)
+})
