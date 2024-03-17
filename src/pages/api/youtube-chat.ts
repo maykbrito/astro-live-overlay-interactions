@@ -8,36 +8,36 @@ const tubeChat = new TubeChat()
 tubeChat.connect('maykbrito')
 
 export const GET: APIRoute = async () => {
-	let handleNewTubeChatMessage: MessageEvent
+  let handleNewTubeChatMessage: MessageEvent
 
-	const stream = new ReadableStream({
-		start(controller) {
-			handleNewTubeChatMessage = ({ message, name }) => {
-				const messageText = message[0]?.text || ''
+  const stream = new ReadableStream({
+    start(controller) {
+      handleNewTubeChatMessage = ({ message, name }) => {
+        const messageText = message[0]?.text || ''
 
-				const messageEventData: MessageEventData = {
-					message: messageText,
-					username: name
-				}
+        const messageEventData: MessageEventData = {
+          message: messageText,
+          username: name
+        }
 
-				const data = `event: chat\ndata: ${JSON.stringify(messageEventData)}\n\n`
+        const data = `event: chat\ndata: ${JSON.stringify(messageEventData)}\n\n`
 
-				controller.enqueue(data)
-			}
+        controller.enqueue(data)
+      }
 
-			tubeChat.on('message', handleNewTubeChatMessage)
-		},
-		cancel() {
-			tubeChat.removeListener('message', handleNewTubeChatMessage)
-		}
-	})
+      tubeChat.on('message', handleNewTubeChatMessage)
+    },
+    cancel() {
+      tubeChat.removeListener('message', handleNewTubeChatMessage)
+    }
+  })
 
-	return new Response(stream, {
-		status: 200,
-		headers: {
-			'Content-Type': 'text/event-stream',
-			Connection: 'keep-alive',
-			'Cache-Control': 'no-cache'
-		}
-	})
+  return new Response(stream, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/event-stream',
+      Connection: 'keep-alive',
+      'Cache-Control': 'no-cache'
+    }
+  })
 }

@@ -31,7 +31,9 @@ Jump confetti in the scene! **Sounds included**.
 
 Access it at `/?confetti=true`
 
-## SSR
+## Instalação
+
+`pnpm run install`
 
 `pnpm run build`
 
