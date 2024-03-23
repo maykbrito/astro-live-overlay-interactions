@@ -1,5 +1,6 @@
 import { store } from '@/store'
-import config from '@/config'
+import { config } from '@/config'
+
 const getPathname = () => new URL(window.location.href).pathname
 const { peopleAllowedToAsk } = config
 

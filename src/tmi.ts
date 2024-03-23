@@ -1,11 +1,11 @@
 import tmi from 'tmi.js'
 import type { MessageEventData } from '@/actions'
 import { handleMessageEvent } from '@/actions'
-import config from '@/config'
+import { config } from '@/config'
 import { store } from '@/store'
 
 const client = new tmi.Client({
-  channels: config.channels
+  channels: [config.twitchChannelName]
 })
 
 client.connect()
