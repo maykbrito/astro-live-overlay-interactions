@@ -18,6 +18,4 @@ client.on('message', (_channel, extra, message) => {
   }
 
   handleMessageEvent(messageEventData)
-
-  store.chat.messages.push(messageEventData)
 })
