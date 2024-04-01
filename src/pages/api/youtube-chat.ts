@@ -3,9 +3,10 @@ import type { MessageEvent } from 'tubechat/lib/types'
 import { TubeChat } from 'tubechat'
 
 import type { MessageEventData } from '@/actions'
+import { config } from '@/config'
 
 const tubeChat = new TubeChat()
-tubeChat.connect('maykbrito')
+tubeChat.connect(config.youtubeChannelName)
 
 export const GET: APIRoute = async () => {
   let handleNewTubeChatMessage: MessageEvent

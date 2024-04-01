@@ -1,4 +1,5 @@
-export default {
-  channels: ['maykbrito'],
+export const config = {
+  twitchChannelName: 'maykbrito',
+  youtubeChannelName: 'maykbrito',
   peopleAllowedToAsk: ['maykbrito']
 }
