@@ -1,9 +1,10 @@
 import httpServer from 'node:http'
 import { Server } from 'socket.io'
 import { TubeChat } from 'tubechat'
+import { config } from './config'
 
 const tubeChat = new TubeChat()
-tubeChat.connect('Gaules')
+tubeChat.connect(config.youtubeChannelName)
 
 const server = httpServer.createServer()
 

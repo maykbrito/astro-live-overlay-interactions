@@ -14,7 +14,6 @@ export const GET: APIRoute = async () => {
   const stream = new ReadableStream({
     start(controller) {
       handleNewTubeChatMessage = ({ message, name, isMembership, isModerator, thumbnail }) => {
-        console.log("Ola")
         const messageText = message[0]?.text || ''
 
         const messageEventData: MessageEventData = {
@@ -25,7 +24,7 @@ export const GET: APIRoute = async () => {
             isyoutube: true,
             subscriber: isMembership,
             mod: isModerator,
-            thumbnail
+            thumbnail: thumbnail.url ?? 'user.png'
           }
         }
 

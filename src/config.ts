@@ -1,5 +1,5 @@
 export const config = {
-  twitchChannelName: 'Gaules',
-  youtubeChannelName: 'Gaules',
+  twitchChannelName: 'gaules',
+  youtubeChannelName: 'gaules',
   peopleAllowedToAsk: ['Gaules']
 }

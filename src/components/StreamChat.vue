@@ -1,9 +1,9 @@
 <template>
   <div class="message-wrapper p-1 w-screen" :class="{ visible: isVisible }">
-    <div class="inner rounded-md p-4 text-gray-400 relative bg-gray-900 text-lg">
+    <div class="inner w-full rounded-md p-4 text-gray-400 relative bg-gray-900 text-lg">
       <div class="flex flex-row gap-4">   
         <img v-if="extra && extra.thumbnail" :src="extra.thumbnail" class="w-10 h-10 bg-yellow-600 rounded-full" alt="Thumbnail" />     
-        <div class="flex-1 flex flex-col">
+        <div class="w-11/12 flex flex-col">
           <div class="flex flex-row items-center gap-2 items-center">
             <div 
               v-if="extra.istwitch" 
@@ -101,9 +101,14 @@ const messageWithEmotes = computed(() => {
   const urlRegex = /(https?:\/\/[^\s]+)/g
 
   message = message.replace(urlRegex, (url) => {
-    return `<a href="${url}" class="cursor-pointer text-purple-600 font-italic underline inline-block" target="_blank">${url}</a>`
+    return `<a href="${url}" class="cursor-pointer text-purple-600 font-italic underline" target="_blank">${url}</a>`
   })
 
+  const marcacaoRegex = /@\b(\w+)\b/g
+
+  message = message.replace(marcacaoRegex, (_match, text) => {
+    return `<span class="bg-gray-400 text-gray-900 font-italic p-1 rounded-md" target="_blank">@${text}</span>`
+  })
 
   const messageEmotes = props.extra?.emotes
 
