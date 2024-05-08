@@ -1,10 +1,52 @@
 <template>
   <div class="message-wrapper p-1 w-screen" :class="{ visible: isVisible }">
-    <div class="inner p-4 text-gray-400 relative bg-gray-900 text-lg">
-      <div class="text-gray-100 mb-2 text-xs uppercase">
-        {{ user }}
+    <div class="inner rounded-md p-4 text-gray-400 relative bg-gray-900 text-lg">
+      <div class="flex flex-row gap-4">   
+        <img v-if="extra && extra.thumbnail" :src="extra.thumbnail" class="w-10 h-10 bg-yellow-600 rounded-full" alt="Thumbnail" />     
+        <div class="flex-1 flex flex-col">
+          <div class="flex flex-row items-center gap-2 items-center">
+            <div 
+              v-if="extra.istwitch" 
+              class="flex w-6 "
+            >
+              <img alt="twitch-logo" src="twitch-icon.png" width="24px"/>
+            </div>
+            <div 
+              v-if="extra.isyoutube" 
+              class="flex w-6 "
+            >
+              <img alt="twitch-logo" src="youtube-icon.png" width="24px"/>
+            </div>
+
+            <div 
+              v-if="extra.isModerator || extra.mod" 
+              class="flex w-6 "
+            >
+              <svg fill="#eab308" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                width="24px" height="24px" viewBox="0 0 34.5 34.5" xml:space="preserve">
+              <g>
+                <path d="M34.5,20.375v-6.25h-4.514c-0.32-1.313-0.838-2.545-1.521-3.669l3.193-3.193l-4.42-4.419l-3.193,3.193
+                  c-1.125-0.683-2.355-1.2-3.67-1.521V0.001h-6.25v4.515c-1.313,0.321-2.546,0.838-3.671,1.521L7.262,2.844L2.843,7.263l3.193,3.193
+                  c-0.684,1.125-1.2,2.357-1.521,3.669H0v6.25h4.516c0.32,1.312,0.838,2.545,1.521,3.669l-3.193,3.191l4.419,4.421l3.192-3.193
+                  c1.125,0.685,2.357,1.2,3.671,1.521v4.516h6.25v-4.516c1.313-0.32,2.545-0.838,3.67-1.521l3.192,3.193l4.421-4.421l-3.193-3.191
+                  c0.685-1.125,1.199-2.355,1.521-3.669H34.5z M17.25,23.5c-3.451,0-6.25-2.798-6.25-6.25S13.799,11,17.25,11s6.25,2.798,6.25,6.25
+                  S20.701,23.5,17.25,23.5z"/>
+              </g>
+              </svg>
+            </div>
+            <p 
+              :class="{
+                'text-purple-600': extra.istwitch && extra.subscriber,
+                'text-red-600': extra.isyoutube && extra.subscriber
+              }" 
+              class="text-gray-100 text-xs uppercase"
+            >
+              {{ user }}
+            </p>            
+          </div>
+          <p v-html="messageWithEmotes" />
+        </div>
       </div>
-      <p v-html="messageWithEmotes" />
     </div>
   </div>
 </template>
@@ -56,6 +98,13 @@ function emoteURL(emoteId: string) {
 const messageWithEmotes = computed(() => {
   let message = sanitizeMessage(props.message)
 
+  const urlRegex = /(https?:\/\/[^\s]+)/g
+
+  message = message.replace(urlRegex, (url) => {
+    return `<a href="${url}" class="cursor-pointer text-purple-600 font-italic underline inline-block" target="_blank">${url}</a>`
+  })
+
+
   const messageEmotes = props.extra?.emotes
 
   if (!messageEmotes) return message
@@ -80,6 +129,7 @@ const messageWithEmotes = computed(() => {
 
   return message
 })
+
 </script>
 
 <style scoped>
@@ -119,7 +169,7 @@ const messageWithEmotes = computed(() => {
 
 .message-wrapper.visible {
   opacity: 1;
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .inner {

@@ -3,7 +3,7 @@ import { Server } from 'socket.io'
 import { TubeChat } from 'tubechat'
 
 const tubeChat = new TubeChat()
-tubeChat.connect('maykbrito')
+tubeChat.connect('Gaules')
 
 const server = httpServer.createServer()
 
@@ -20,7 +20,11 @@ const onConnection = socket => {
     /** @type {import('./actions').MessageEventData} */
     const messageEventData = {
       message: messageText,
-      username: name
+      username: name,
+      extra: {
+        istwitch: false,
+        isyoutube: true
+      }
     }
 
     socket.emit('chat', messageEventData)

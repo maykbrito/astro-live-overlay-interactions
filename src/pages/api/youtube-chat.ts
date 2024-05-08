@@ -13,12 +13,20 @@ export const GET: APIRoute = async () => {
 
   const stream = new ReadableStream({
     start(controller) {
-      handleNewTubeChatMessage = ({ message, name }) => {
+      handleNewTubeChatMessage = ({ message, name, isMembership, isModerator, thumbnail }) => {
+        console.log("Ola")
         const messageText = message[0]?.text || ''
 
         const messageEventData: MessageEventData = {
           message: messageText,
-          username: name
+          username: name,
+          extra: {
+            istwitch: false,
+            isyoutube: true,
+            subscriber: isMembership,
+            mod: isModerator,
+            thumbnail
+          }
         }
 
         const data = `event: chat\ndata: ${JSON.stringify(messageEventData)}\n\n`
