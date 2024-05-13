@@ -10,7 +10,7 @@ const client = new tmi.Client({
 client.connect()
 
 client.on('message', (_channel, extra, message) => {
-  const localConfig = JSON.parse(localStorage.getItem("configuracoes"))
+  const localConfig = JSON.parse(localStorage.getItem("configuracao"))
 
   const messageEventData: MessageEventData = {
     message,
