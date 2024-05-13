@@ -11,6 +11,14 @@
         <input type="color" id="corMensagem" v-model="features.theme.corMensagem" class="mt-1 rounded-lg border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
       </div>
       <div>
+        <label for="corMensagemMarcacao" class="block text-sm font-medium text-gray-700">Cor da Mensagem da marcação:</label>
+        <input type="color" id="corMensagemMarcacao" v-model="features.theme.corMensagemMarcacao" class="mt-1 rounded-lg border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      </div>
+      <div>
+        <label for="corFundoMarcacao" class="block text-sm font-medium text-gray-700">Cor da Mensagem da marcação:</label>
+        <input type="color" id="corFundoMarcacao" v-model="features.theme.corFundoMarcacao" class="mt-1 rounded-lg border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      </div>
+      <div>
         <label for="corBadgeModerado" class="block text-sm font-medium text-gray-700">Cor da Badge de Moderador:</label>
         <input type="color" id="corBadgeModerado" v-model="features.theme.corBadgeModerado" class="mt-1 rounded-lg border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
       </div>
@@ -58,8 +66,8 @@
       class="w-full flex my-4 horizontal"
     >
       <StreamChat
-        message="A mensagem aparecerá assim!"
-        user="FulaninhoDeTal"
+        message="A mensagem aparecerá assim! o que vc acha @admin"
+        user="viewer_nickname"
         :extra="features"
       />
     </div>
@@ -84,6 +92,8 @@ const features = ref({
     corBadgeModerado: '#EAB308', 
     corFundoChat: '#111827',  
     corMensagem: '#9CA3AF',
+    corMensagemMarcacao: '#111827',
+    corFundoMarcacao: '#9CA3AF',
     habilitarAvatar: false 
   }
 });
@@ -97,6 +107,8 @@ onMounted(() => {
     features.value.theme.corBadgeModerado = configLoaded.corBadgeModerado,
     features.value.theme.corFundoChat = configLoaded.corFundoChat,
     features.value.theme.corMensagem = configLoaded.corMensagem,
+    features.value.theme.corMensagemMarcacao = configLoaded.corMensagemMarcacao,
+    features.value.theme.corFundoMarcacao = configLoaded.corFundoMarcacao,
     features.value.theme.habilitarAvatar = configLoaded.habilitarAvatar
   }
 });
