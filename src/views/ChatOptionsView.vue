@@ -88,6 +88,19 @@ const features = ref({
   }
 });
 
+onMounted(() => {
+  const configuracaoSalva = localStorage.getItem('configuracao');
+  if (configuracaoSalva) { 
+    const configLoaded = JSON.parse(configuracaoSalva);
+
+    features.value.theme.corTituloChat = configLoaded.corTituloChat,
+    features.value.theme.corBadgeModerado = configLoaded.corBadgeModerado,
+    features.value.theme.corFundoChat = configLoaded.corFundoChat,
+    features.value.theme.corMensagem = configLoaded.corMensagem,
+    features.value.theme.habilitarAvatar = configLoaded.habilitarAvatar
+  }
+});
+
 const salvarFeatures = () => {
   features.value = {
     ...features.value,
@@ -108,6 +121,7 @@ const salvarFeatures = () => {
 
 const atualizarArquivoJSON = async () => {
   try {
+    localStorage.setItem("configuracao", JSON.stringify(features.value.theme))
       
     const response = await fetch('/api/options', {
       method: 'POST',
