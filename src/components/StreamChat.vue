@@ -113,7 +113,13 @@ const messageWithEmotes = computed(() => {
   const marcacaoRegex = /@\b(\w+)\b/g
 
   message = message.replace(marcacaoRegex, (_match, text) => {
-    return `<span class="bg-gray-400 text-gray-900 font-italic p-1 rounded-md" target="_blank">@${text}</span>`
+    return `
+    <span 
+      class="bg-gray-400 font-italic p-1 rounded-md" target="_blank" 
+      style="
+        background-color: ${props.extra && props.extra.theme ? props.extra.theme.corFundoMarcacao : '#ffffff'}; 
+        color: ${props.extra && props.extra.theme ? props.extra.theme.corMensagemMarcacao : '#09090B'};
+      ">@${text}</span>`
   })
 
   const messageEmotes = props.extra?.emotes
@@ -168,6 +174,14 @@ const messageColor = computed(() => {
   }
   
   return '#c1c1c1';
+});
+
+const taggedColor = computed(() => {
+  if (props.extra.theme && props.extra.theme.corMensagemMarcacao) {
+    return props.extra.theme.corMensagemMarcacao;
+  }
+  
+  return '#111827';
 });
 
 </script>

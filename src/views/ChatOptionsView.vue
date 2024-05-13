@@ -1,6 +1,18 @@
 <template>
   <div class="p-4 w-full max-w-[420px]">
     <h2 class="text-xl font-bold mb-4">Configurações do tema do chat</h2>
+    
+    <div
+      id="chat"
+      class="w-full flex my-4 horizontal"
+    >
+      <StreamChat
+        message="A mensagem aparecerá assim! o que vc acha @admin"
+        user="viewer_nickname"
+        :extra="features"
+      />
+    </div>
+
     <form @submit.prevent="salvarFeatures" class="space-y-4">
       <div>
         <label for="corTituloChat" class="block text-sm font-medium text-gray-700">Cor do Título do Chat:</label>
@@ -61,16 +73,7 @@
       Atualizar Configs
     </button>
 
-    <div
-      id="chat"
-      class="w-full flex my-4 horizontal"
-    >
-      <StreamChat
-        message="A mensagem aparecerá assim! o que vc acha @admin"
-        user="viewer_nickname"
-        :extra="features"
-      />
-    </div>
+    
   </div>
 </template>
 
