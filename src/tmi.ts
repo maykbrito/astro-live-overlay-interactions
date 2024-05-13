@@ -10,8 +10,8 @@ const client = new tmi.Client({
 client.connect()
 
 client.on('message', (_channel, extra, message) => {
-  // TODO Obter a imagem do usuário.
-  // Duvida: Para a api teria que baixar cada vez que receber a mensagem. como fazer?
+  const localConfig = JSON.parse(localStorage.getItem("configuracoes"))
+
   const messageEventData: MessageEventData = {
     message,
     username: extra.username || 'Nome não informado',
@@ -19,7 +19,10 @@ client.on('message', (_channel, extra, message) => {
       ...extra,
       istwitch: true,
       isyoutube: false,
-      thumbnail: 'user.png'
+      thumbnail: 'user.png',
+      theme:{
+        ...localConfig
+      }
     },
   }
 

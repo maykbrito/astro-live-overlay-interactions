@@ -1,8 +1,11 @@
 <template>
   <div class="message-wrapper p-1 w-screen" :class="{ visible: isVisible }">
-    <div class="inner w-full rounded-md p-4 text-gray-400 relative bg-gray-900 text-lg">
+    <div 
+      class="inner w-full rounded-md p-4 text-gray-400 relative text-lg" 
+      :style="{ 'background-color': props.extra && props.extra.theme ? props.extra.theme.corFundoChat || '#09090B' : '#09090B' }"
+    >
       <div class="flex flex-row gap-4">   
-        <img v-if="extra && extra.thumbnail" :src="extra.thumbnail" class="w-10 h-10 bg-yellow-600 rounded-full" alt="Thumbnail" />     
+        <img v-if="extra && extra.thumbnail && extra.theme.habilitarAvatar" :src="extra.thumbnail" class="w-10 h-10 bg-yellow-600 rounded-full" alt="Thumbnail" />     
         <div class="w-11/12 flex flex-col">
           <div class="flex flex-row items-center gap-2 items-center">
             <div 
@@ -22,7 +25,7 @@
               v-if="extra.isModerator || extra.mod" 
               class="flex w-6 "
             >
-              <svg fill="#eab308" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+              <svg :fill="fillColorMod" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                 width="24px" height="24px" viewBox="0 0 34.5 34.5" xml:space="preserve">
               <g>
                 <path d="M34.5,20.375v-6.25h-4.514c-0.32-1.313-0.838-2.545-1.521-3.669l3.193-3.193l-4.42-4.419l-3.193,3.193
@@ -35,16 +38,19 @@
               </svg>
             </div>
             <p 
-              :class="{
-                'text-purple-600': extra.istwitch && extra.subscriber,
-                'text-red-600': extra.isyoutube && extra.subscriber
-              }" 
+              :style="{
+                  color: textColor
+                }" 
               class="text-gray-100 text-xs uppercase"
             >
               {{ user }}
             </p>            
           </div>
-          <p v-html="messageWithEmotes" />
+          <p 
+            v-html="messageWithEmotes"
+            :style="{
+                color:  messageColor
+            }"/>
         </div>
       </div>
     </div>
@@ -134,6 +140,35 @@ const messageWithEmotes = computed(() => {
 
   return message
 })
+
+const fillColorMod = computed(() => {
+  if (!props.extra || !props.extra.theme) {
+    return '#eab308'; 
+  } else {
+    return props.extra.theme.corBadgeModerado; 
+  }
+});
+
+const textColor = computed(() => {
+  if (props.extra) {
+    if (props.extra.istwitch && !props.extra.isyoutube && props.extra.subscriber) {
+      return '#6441a5'; 
+    } else if (props.extra.isyoutube && !props.extra.istwitch && props.extra.subscriber) {
+      return '#FF0000';
+    } else if (props.extra.theme && props.extra.theme.corTituloChat) {
+      return props.extra.theme.corTituloChat;
+    }
+  }
+  return 'white';
+});
+
+const messageColor = computed(() => {
+  if (props.extra.theme && props.extra.theme.corMensagem) {
+    return props.extra.theme.corMensagem;
+  }
+  
+  return '#c1c1c1';
+});
 
 </script>
 
