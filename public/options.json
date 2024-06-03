@@ -1,0 +1,8 @@
+{
+  "configuracoes": {
+    "corTituloChat": "#000000",
+    "corBadgeModerado": "#ff0000",
+    "corFundoChat": "#ffffff",
+    "habilitarAvatar": false
+  }
+}

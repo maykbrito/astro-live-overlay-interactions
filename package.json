@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "serve": "HOST=0.0.0.0 PORT=8485 node ./dist/server/entry.mjs",
+    "serve-win": "set PORT=8485 && node ./dist/server/entry.mjs",
     "ws": "node src/ws.js",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix"
