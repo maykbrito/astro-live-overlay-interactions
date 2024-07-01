@@ -10,5 +10,8 @@ export default defineConfig({
   integrations: [tailwind(), vue()],
   adapter: node({
     mode: 'standalone'
-  })
+  }),
+  devToolbar: {
+    enabled: false
+  }
 })

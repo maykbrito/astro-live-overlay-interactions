@@ -60,25 +60,32 @@ const messageWithEmotes = computed(() => {
 
   if (!messageEmotes) return message
 
-  const emotes = Object.keys(messageEmotes)
+  try {
+    const emotes = Object.keys(messageEmotes)
 
-  for (let emote of emotes) {
-    let reversedMessageEmotes = messageEmotes[emote].toReversed()
+    for (let emote of emotes) {
+      let reversedMessageEmotes = messageEmotes[emote].toReversed()
 
-    for (let i = 0; i < reversedMessageEmotes.length; i++) {
-      let img = imgEmote(emoteURL(emote))
-      let [start, end] = reversedMessageEmotes[i].split('-')
+      for (let i = 0; i < reversedMessageEmotes.length; i++) {
+        let img = imgEmote(emoteURL(emote))
+        let [start, end] = reversedMessageEmotes[i].split('-')
 
-      message = replaceBetween({
-        start: Number(start),
-        end: Number(end) + 1,
-        img,
-        message
-      })
+        message = replaceBetween({
+          start: Number(start),
+          end: Number(end) + 1,
+          img,
+          message
+        })
+      }
     }
+
+  } catch(e) {
+    console.log('erro de emoji')
+  } finally {
+    return message
   }
 
-  return message
+  
 })
 </script>
 

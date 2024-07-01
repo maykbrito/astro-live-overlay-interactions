@@ -1,17 +1,19 @@
 <template>
-  <div class="chat-wrapper w-screen h-screen">
-    <div
-      id="chat"
-      class="grid bottom-1 absolute"
-      :class="{ horizontal: shouldShowHorizontalChat }"
-    >
-      <StreamChat
-        v-for="({ message, username, extra }, index) in messages"
-        :key="index"
-        :message="message"
-        :user="username"
-        :extra="extra"
-      />
+  <div class="chat-wrapper w-screen h-screen overflow-hidden">
+    <div class="w-full h-full overflow-y-auto flex flex-col-reverse snap-mandatory snap-y">
+      <div
+        id="chat"
+        class="snap-end flex flex-col"
+        :class="{ horizontal: shouldShowHorizontalChat }"
+      >
+        <StreamChat
+          v-for="({ message, username, extra }, index) in messages"
+          :key="index"
+          :message="message"
+          :user="username"
+          :extra="extra"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -31,4 +33,8 @@ const { messages, shouldShowHorizontalChat } = useChat({
   -webkit-mask-image: var(--mask);
   mask-image: var(--mask);
 }
+
+::-webkit-scrollbar {
+  display: none;
+} 
 </style>
