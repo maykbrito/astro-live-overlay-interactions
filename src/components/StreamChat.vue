@@ -8,31 +8,31 @@
           :alt="yt.thumbnail.alt || user"
           class="w-6 h-6 rounded-full"
         />
-        <div class="text-gray-100/50 text-xs uppercase flex items-center gap-1">
+        <div class="text-gray-100/50 text-xs uppercase flex items-center gap-1 tracking-wider">
           {{ user }}
           <span
             v-if="yt?.isVerified"
-            class="px-1 rounded bg-gray-800 text-[10px]"
+            class="px-1 rounded bg-gray-800 text-xs"
             >✔︎</span
           >
           <span
             v-if="yt?.isModerator"
-            class="px-1 rounded bg-green-800 text-[10px]"
+            class="px-1 rounded bg-green-800 text-xs"
             >MOD</span
           >
           <span
             v-if="yt?.isOwner"
-            class="px-1 rounded bg-yellow-800 text-[10px]"
+            class="px-1 rounded bg-yellow-800 text-xs"
             >OWNER</span
           >
           <span
             v-if="yt?.isMembership"
-            class="px-1 rounded bg-blue-800 text-[10px]"
+            class="px-1 rounded bg-blue-800 text-xs"
             >MEMBER</span
           >
         </div>
       </div>
-      <p class="text-lg" v-html="messageWithEmotes" />
+      <p class="text-lg tracking-wider leading-relaxed" v-html="messageWithEmotes" />
     </div>
   </div>
 </template>
@@ -79,24 +79,8 @@ const isVisible = ref(false)
 
 onMounted(() => setTimeout(() => (isVisible.value = true), 100))
 
-type ReplaceBetweenParams = {
-  start: number
-  end: number
-  img: string
-  message: string
-}
-
-function replaceBetween({
-  start,
-  end,
-  img,
-  message
-}: ReplaceBetweenParams): string {
-  return message.substring(0, start) + img + message.substring(end)
-}
-
 function imgEmote(src: string) {
-  return `<img class="inline-block w-8" src="${src}"/>`
+  return `<img class="inline-block w-6 h-6 align-middle" src="${src}" alt="emote"/>`
 }
 
 function emoteURL(emoteId: string) {
@@ -116,35 +100,43 @@ const messageWithEmotes = computed(() => {
     return rebuilt
   }
 
-  let message = sanitizeMessage(props.message)
-
+  const raw = props.message || ''
   const messageEmotes = props.extra?.emotes
 
-  if (!messageEmotes) return message
+  if (!messageEmotes) return sanitizeMessage(raw)
 
   try {
-    const emotes = Object.keys(messageEmotes)
+    const ranges: { start: number; end: number; id: string }[] = []
 
-    for (let emote of emotes) {
-      let reversedMessageEmotes = messageEmotes[emote].toReversed()
-
-      for (let i = 0; i < reversedMessageEmotes.length; i++) {
-        let img = imgEmote(emoteURL(emote))
-        let [start, end] = reversedMessageEmotes[i].split('-')
-
-        message = replaceBetween({
-          start: Number(start),
-          end: Number(end) + 1,
-          img,
-          message
-        })
+    for (const id of Object.keys(messageEmotes)) {
+      for (const range of messageEmotes[id]) {
+        const [startStr, endStr] = range.split('-')
+        ranges.push({ start: Number(startStr), end: Number(endStr), id })
       }
     }
+
+    ranges.sort((a, b) => a.start - b.start)
+
+    let cursor = 0
+    let out = ''
+
+    for (const r of ranges) {
+      if (cursor < r.start) {
+        out += sanitizeMessage(raw.slice(cursor, r.start))
+      }
+      out += imgEmote(emoteURL(r.id))
+      cursor = r.end + 1
+    }
+
+    if (cursor < raw.length) {
+      out += sanitizeMessage(raw.slice(cursor))
+    }
+
+    return out
   } catch (e) {
     console.log('erro de emoji')
+    return sanitizeMessage(raw)
   }
-
-  return message
 })
 
 const ytStyle = computed(() => {
@@ -155,7 +147,7 @@ const ytStyle = computed(() => {
 
 <style scoped>
 .message-wrapper {
-  --outline-width: 4px;
+  --outline-width: 3px;
   /* overflow: hidden; */
   opacity: 0;
   transition:
