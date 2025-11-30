@@ -1,9 +1,9 @@
 import { computed, onMounted, ref } from 'vue'
 
-import type { AskMessage, ChatMessage } from '@/store'
+import type { ChatMessage } from '@/store'
 import { store } from '@/store'
 
-type MessageSource = 'chat' | 'ask'
+export type MessageSource = 'chat' | 'ask'
 
 type UseChatParams = {
   getMessagesFrom: MessageSource
@@ -11,7 +11,7 @@ type UseChatParams = {
 
 type MessageType<T extends MessageSource> = {
   chat: ChatMessage
-  ask: AskMessage
+  ask: ChatMessage
 }[T]
 
 export function useChat<const Params extends UseChatParams>({

@@ -1,7 +1,8 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import AskView from "@/views/AskView.vue"
+import Layout from '@/layouts/Layout.astro'
+import ChatView from '@/views/ChatView.vue'
 ---
+
 <Layout>
-  <AskView client:only="vue" />
+  <ChatView client:only="vue" getMessageFrom="ask" />
 </Layout>

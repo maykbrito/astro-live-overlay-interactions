@@ -5,7 +5,7 @@
     >
       <div
         id="chat"
-        class="snap-end flex flex-col"
+        class="snap-end flex flex-col space-y-3"
         :class="{ horizontal: shouldShowHorizontalChat }"
       >
         <StreamChat
@@ -24,10 +24,14 @@
 
 <script setup lang="ts">
 import StreamChat from '@/components/StreamChat.vue'
-import { useChat } from '@/composables/useChat'
+import { useChat, type MessageSource } from '@/composables/useChat'
+
+const props = withDefaults(defineProps<{ getMessageFrom: MessageSource }>(), {
+  getMessageFrom: 'chat'
+})
 
 const { messages, shouldShowHorizontalChat } = useChat({
-  getMessagesFrom: 'chat'
+  getMessagesFrom: props.getMessageFrom
 })
 </script>
 

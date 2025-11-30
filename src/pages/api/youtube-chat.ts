@@ -14,7 +14,6 @@ export const GET: APIRoute = async () => {
   const stream = new ReadableStream({
     start(controller) {
       handleNewTubeChatMessage = ({ message, name, ...rest }) => {
-        // console.dir({ rest })
         try {
           const messageText = message
             .map(part =>

@@ -34,18 +34,13 @@ export type ChatMessage = {
   }
 }
 
-export type AskMessage = {
-  username: string
-  message: string
-  extra?: ChatUserstate
-}
 
 type Store = {
   chat: {
     messages: ChatMessage[]
   }
   ask: {
-    messages: AskMessage[]
+    messages: ChatMessage[]
   }
   sfx: Sfx[]
 }

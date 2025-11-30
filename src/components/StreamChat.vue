@@ -1,5 +1,5 @@
 <template>
-  <div class="message-wrapper p-1 w-screen" :class="{ visible: isVisible }">
+  <div class="message-wrapper p-1 w-screen shadow-xl" :class="{ visible: isVisible }">
     <div class="inner p-4 text-gray-100 relative bg-gray-950" :style="ytStyle">
       <div class="flex items-center gap-2 mb-2">
         <img
@@ -8,31 +8,28 @@
           :alt="yt.thumbnail.alt || user"
           class="w-6 h-6 rounded-full"
         />
-        <div class="text-gray-100/50 text-xs uppercase flex items-center gap-1 tracking-wider">
+        <div
+          class="text-gray-100/50 text-xs uppercase flex items-center gap-1 tracking-wider"
+        >
           {{ user }}
-          <span
-            v-if="yt?.isVerified"
-            class="px-1 rounded bg-gray-800 text-xs"
+          <span v-if="yt?.isVerified" class="px-1 rounded bg-gray-800 text-xs"
             >✔︎</span
           >
-          <span
-            v-if="yt?.isModerator"
-            class="px-1 rounded bg-green-800 text-xs"
+          <span v-if="yt?.isModerator" class="px-1 rounded bg-green-800 text-xs"
             >MOD</span
           >
-          <span
-            v-if="yt?.isOwner"
-            class="px-1 rounded bg-yellow-800 text-xs"
+          <span v-if="yt?.isOwner" class="px-1 rounded bg-yellow-800 text-xs"
             >OWNER</span
           >
-          <span
-            v-if="yt?.isMembership"
-            class="px-1 rounded bg-blue-800 text-xs"
+          <span v-if="yt?.isMembership" class="px-1 rounded bg-blue-800 text-xs"
             >MEMBER</span
           >
         </div>
       </div>
-      <p class="text-lg tracking-wider leading-relaxed" v-html="messageWithEmotes" />
+      <p
+        class="text-lg tracking-wider leading-relaxed"
+        v-html="messageWithEmotes"
+      />
     </div>
   </div>
 </template>
@@ -148,11 +145,8 @@ const ytStyle = computed(() => {
 <style scoped>
 .message-wrapper {
   --outline-width: 3px;
-  /* overflow: hidden; */
   opacity: 0;
-  transition:
-    opacity 300ms,
-    margin-top 300ms;
+  transition: all 300ms;
   font-family: 'Press Start 2P', sans-serif;
 }
 
@@ -182,7 +176,6 @@ const ytStyle = computed(() => {
 
 .message-wrapper.visible {
   opacity: 1;
-  margin-top: 10px;
 }
 
 .inner {

@@ -1,8 +1,8 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-import ChatView from "@/views/ChatView.vue"
+import ChatView from '@/views/ChatView.vue'
 ---
+
 <Layout>
-  <ChatView client:only="vue" />
+  <ChatView client:only="vue" getMessageFrom="chat" />
 </Layout>
-  

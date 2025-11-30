@@ -17,7 +17,7 @@ export default async function ({
 
   if (pathname != '/ask') return
 
-  if (!peopleAllowedToAsk.includes(username)) return
+  if (!peopleAllowedToAsk.includes(username.toLowerCase().replace('@', ''))) return
 
   store.ask.messages.push({
     username: 'k1d',
