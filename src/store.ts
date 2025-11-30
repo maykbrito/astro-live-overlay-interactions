@@ -12,6 +12,26 @@ export type ChatMessage = {
   username: string
   message: string
   extra?: ChatUserstate
+  parts?: { text?: string; emoji?: string }[]
+  yt?: {
+    channel?: string
+    id?: string
+    thumbnail?: { url?: string; alt?: string }
+    channelId?: string
+    isMembership?: boolean
+    isOwner?: boolean
+    isVerified?: boolean
+    isModerator?: boolean
+    isNewMember?: boolean
+    badges?: {
+      verified?: number
+      moderator?: number
+      owner?: number
+      member?: number
+    }
+    color?: string
+    timestamp?: string | Date
+  }
 }
 
 export type AskMessage = {

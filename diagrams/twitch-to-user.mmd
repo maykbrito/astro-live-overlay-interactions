@@ -1,0 +1,15 @@
+sequenceDiagram
+  autonumber
+  participant TW as Twitch IRC (tmi.js)
+  participant B as Browser (src/tmi.ts)
+  participant ACT as Actions.handleMessageEvent
+  participant STORE as store.chat.messages
+  participant UI as ChatView → StreamChat
+
+  TW-->>B: message(string), extra(emotes ranges)
+  B->>ACT: handleMessageEvent({ message, extra, username })
+  ACT->>STORE: push(messageEventData)
+  UI->>STORE: useChat() lê messages
+  UI->>UI: StreamChat({ message, extra })
+  UI->>UI: Sanitiza texto e substitui ranges por <img CDN>
+  UI->>User: Mensagem com emotes da Twitch

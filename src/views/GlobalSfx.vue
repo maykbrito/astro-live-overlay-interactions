@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { store, removeSfx } from '@/store'
 import SoundEffect from '@/components/SoundEffect.vue'
+import { removeSfx, store } from '@/store'
 
 const effects = computed(() => store.sfx)
 </script>

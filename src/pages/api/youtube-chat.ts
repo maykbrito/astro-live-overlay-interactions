@@ -13,17 +13,38 @@ export const GET: APIRoute = async () => {
 
   const stream = new ReadableStream({
     start(controller) {
-      handleNewTubeChatMessage = ({ message, name }) => {
-        const messageText = message[0]?.text || ''
+      handleNewTubeChatMessage = ({ message, name, ...rest }) => {
+        // console.dir({ rest })
+        try {
+          const messageText = message
+            .map(part =>
+              typeof part === 'object' && part && 'text' in part
+                ? part.text
+                : ''
+            )
+            .join('')
 
-        const messageEventData: MessageEventData = {
-          message: messageText,
-          username: name
+          const firstEmoji =
+            (
+              message.find(
+                part => typeof part === 'object' && part && 'emoji' in part
+              ) as { emoji?: string } | undefined
+            )?.emoji || ''
+
+          const messageEventData: MessageEventData = {
+            message: messageText,
+            emoji: firstEmoji,
+            username: name,
+            parts: message as { text?: string; emoji?: string }[],
+            yt: rest as any
+          }
+
+          const data = `event: chat\ndata: ${JSON.stringify(messageEventData)}\n\n`
+
+          controller.enqueue(new TextEncoder().encode(data))
+        } catch (e) {
+          console.error('youtube-chat stream error', e)
         }
-
-        const data = `event: chat\ndata: ${JSON.stringify(messageEventData)}\n\n`
-
-        controller.enqueue(data)
       }
 
       tubeChat.on('message', handleNewTubeChatMessage)

@@ -29,7 +29,7 @@ export default async function ({
 
   try {
     const response = (await fetch(
-      'http://localhost:4321/api/bot/?q=' + message
+      'http://localhost:8485/api/bot/?q=' + message
     ).then(res => res.json())) as { content: string }
 
     console.log('bot: ' + response.content)

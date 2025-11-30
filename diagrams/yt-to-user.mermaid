@@ -1,0 +1,22 @@
+sequenceDiagram
+  autonumber
+  participant YC as YouTube Chat (TubeChat)
+  participant API as Astro API (/api/youtube-chat)
+  participant ES as Browser EventSource (src/yt.ts)
+  participant ACT as Actions.handleMessageEvent
+  participant STORE as store.chat.messages
+  participant UI as ChatView → StreamChat
+
+  YC->>API: message: [{ text }, { emoji }, ...]
+  API->>API: Reconstrói messageText + preserva parts
+  API-->>ES: SSE event: chat { message, emoji, parts, username }
+  ES->>ACT: handleMessageEvent(messageEventData)
+  ACT->>STORE: push(messageEventData)
+  UI->>STORE: useChat() lê messages
+  UI->>UI: StreamChat(props: { message, extra, parts })
+  alt parts presentes (YouTube)
+    UI->>UI: Monta HTML: texto sanitizado + <img src="emoji">
+  else sem parts (Twitch)
+    UI->>UI: Substitui ranges de extra.emotes por <img>
+  end
+  UI->>User: Mensagem renderizada com emojis/imagens
