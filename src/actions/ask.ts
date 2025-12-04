@@ -17,7 +17,12 @@ export default async function ({
 
   if (pathname != '/ask') return
 
-  if (!peopleAllowedToAsk.includes(username.toLowerCase().replace('@', ''))) return
+  const allowedToAsk = peopleAllowedToAsk.includes(
+    username.toLowerCase().replace('@', '')
+  )
+  if (!allowedToAsk) {
+    return
+  }
 
   store.ask.messages.push({
     username: 'k1d',
@@ -38,6 +43,12 @@ export default async function ({
       username: 'therealdevthales',
       message: response.content
     })
+
+    await fetch('http://localhost:8485/api/youtube-send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: response.content })
+    }).catch(() => null)
   } catch (error) {
     console.error('Erro ao chamar a API da OpenAI:', error)
   }

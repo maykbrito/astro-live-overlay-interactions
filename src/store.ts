@@ -34,7 +34,6 @@ export type ChatMessage = {
   }
 }
 
-
 type Store = {
   chat: {
     messages: ChatMessage[]

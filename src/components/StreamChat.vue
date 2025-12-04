@@ -1,5 +1,8 @@
 <template>
-  <div class="message-wrapper p-1 w-screen shadow-xl" :class="{ visible: isVisible }">
+  <div
+    class="message-wrapper p-1 w-screen shadow-xl"
+    :class="{ visible: isVisible }"
+  >
     <div class="inner p-4 text-gray-100 relative bg-gray-950" :style="ytStyle">
       <div class="flex items-center gap-2 mb-2">
         <img
@@ -9,7 +12,7 @@
           class="w-6 h-6 rounded-full"
         />
         <div
-          class="text-gray-100/50 text-xs uppercase flex items-center gap-1 tracking-wider"
+          class="text-gray-100/50 text-xs uppercase flex items-center gap-1 tracking-widest"
         >
           {{ user }}
           <span v-if="yt?.isVerified" class="px-1 rounded bg-gray-800 text-xs"
@@ -27,7 +30,7 @@
         </div>
       </div>
       <p
-        class="text-lg tracking-wider leading-relaxed"
+        class="text-xl tracking-wider leading-relaxed"
         v-html="messageWithEmotes"
       />
     </div>
